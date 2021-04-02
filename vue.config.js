@@ -36,7 +36,16 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    proxy: { // 注意施proxy，不能proxyTable
+      [process.env.VUE_APP_BASE_API]: { // 对应.env.development里的VUE_APP_BASE_API
+        target: 'http://121.5.234.80:8899', // 需要跨域的地址
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      }
+    }
+    // before: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
