@@ -1,11 +1,11 @@
-import request from '@/utils/request'
+import request from '@/utils/request';
 
 export function login(data) {
   return request({
     url: '/AccAdmin/doLogin',
     method: 'post',
     data
-  })
+  });
 }
 
 export function getInfo(token) {
@@ -13,12 +13,12 @@ export function getInfo(token) {
     url: '/AccAdmin/fristOpenAdmin',
     method: 'post',
     params: { token }
-  })
+  });
 }
 
 export function logout() {
   return request({
-    url: '/vue-element-admin/user/logout',
+    url: '/AccAdmin/doExit',
     method: 'post'
-  })
+  });
 }

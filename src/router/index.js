@@ -1,16 +1,16 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-Vue.use(Router)
+Vue.use(Router);
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from '@/layout';
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+import componentsRouter from './modules/components';
+import chartsRouter from './modules/charts';
+import tableRouter from './modules/table';
+import nestedRouter from './modules/nested';
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -78,14 +78,87 @@ export const constantRoutes = [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        name: 'dashboard',
+        meta: { title: '首页', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/order',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/order/index'),
+        name: 'Order',
+        meta: { title: '订单管理', icon: 'table', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/dormitory',
+    component: Layout,
+    redirect: '/dormitory/index',
+    alwaysShow: true, // will always show the root menu
+    name: 'dormitory',
+    meta: { title: '民宿管理', icon: 'size', affix: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/dormitory/index'),
+        name: 'index',
+        meta: {
+          title: '民宿清单'
+        }
+      },
+      {
+        path: 'hotDormitory',
+        component: () => import('@/views/dormitory/hotDormitory'),
+        name: 'hotDormitory',
+        meta: {
+          title: '网红民宿'
+          // if do not set roles, means: this page does not require permission
+        }
+      },
+      {
+        path: 'brandDormitory',
+        component: () => import('@/views/dormitory/brandDormitory'),
+        name: 'brandDormitory',
+        meta: {
+          title: '品牌民宿'
+          // if do not set roles, means: this page does not require permission
+        }
+      }
+    ]
+  },
+  {
+    path: '/comments',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/comments/index'),
+        name: 'comments',
+        meta: { title: '评论管理', icon: 'edit', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/people',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/people/index'),
+        name: 'comments',
+        meta: { title: '人员管理', icon: 'people', affix: true }
       }
     ]
   },
   {
     path: '/documentation',
     component: Layout,
+    hidden: false,
     children: [
       {
         path: 'index',
@@ -122,7 +195,7 @@ export const constantRoutes = [
       }
     ]
   }
-]
+];
 
 /**
  * asyncRoutes
@@ -385,20 +458,20 @@ export const asyncRoutes = [
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
-]
+];
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
-})
+});
 
-const router = createRouter()
+const router = createRouter();
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher; // reset router
 }
 
-export default router
+export default router;
