@@ -51,10 +51,8 @@ const actions = {
     return new Promise(resolve => {
       let accessedRoutes;
       if (roles.includes('admin')) {
-        console.info('包含的路由');
         accessedRoutes = asyncRoutes || [];
       } else {
-        console.info('没有路由');
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles);
       }
       commit('SET_ROUTES', accessedRoutes);

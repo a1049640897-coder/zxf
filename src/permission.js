@@ -19,8 +19,6 @@ router.beforeEach(async(to, from, next) => {
 
   // determine whether the user has logged in
   const hasToken = getToken();
-  console.info('动态路由', hasToken);
-
   if (hasToken) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
@@ -29,7 +27,6 @@ router.beforeEach(async(to, from, next) => {
     } else {
       // determine whether the user has obtained his permission roles through getInfo
       const hasRoles = store.getters.roles && store.getters.roles.length > 0;
-      console.info('是否拥有角色', hasRoles);
       if (hasRoles) {
         next();
       } else {
@@ -39,7 +36,6 @@ router.beforeEach(async(to, from, next) => {
           const roles = await store.dispatch('user/getInfo');
           const newRoles = [];
           newRoles.push(roles.admin.pw);
-          console.info('出现', newRoles);
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', newRoles);
           //
