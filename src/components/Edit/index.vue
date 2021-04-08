@@ -10,7 +10,8 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancelEdit">取 消</el-button>
-        <el-button type="primary" @click="confirmEdit">确 定</el-button>
+        <el-button v-if="type" type="primary" @click="confirmEdit">确 定</el-button>
+        <el-button v-else type="primary" @click="confirmAdd">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -27,6 +28,10 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    type: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -46,6 +51,10 @@ export default {
         })
         .catch(_ => {
         });
+    },
+
+    confirmAdd() {
+      this.$emit('addList');
     },
     handleClose(done) {
       this.$emit('closeEdit');

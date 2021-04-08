@@ -2,7 +2,7 @@ import request from '@/utils/request';
 
 export function getList(data) {
   return request({
-    url: '/order/getList',
+    url: '/user/getList',
     method: 'post',
     data
   });
@@ -10,7 +10,7 @@ export function getList(data) {
 
 export function updateList(data) {
   return request({
-    url: '/order/update',
+    url: '/user/update',
     method: 'post',
     data
   });
@@ -18,16 +18,8 @@ export function updateList(data) {
 
 export function deletOrder(data) {
   return request({
-    url: '/order/delete',
+    url: '/user/delete',
     method: 'put',
-    data
-  });
-}
-
-export function getUser(data) {
-  return request({
-    url: '/user/getById',
-    method: 'post',
     data
   });
 }

@@ -98,19 +98,11 @@ export const constantRoutes = [
   {
     path: '/dormitory',
     component: Layout,
-    redirect: '/dormitory/index',
+    redirect: '/dormitory/hotDormitory',
     alwaysShow: true, // will always show the root menu
     name: 'dormitory',
     meta: { title: '民宿管理', icon: 'size', affix: true },
     children: [
-      {
-        path: 'index',
-        component: () => import('@/views/dormitory/index'),
-        name: 'index',
-        meta: {
-          title: '民宿清单'
-        }
-      },
       {
         path: 'hotDormitory',
         component: () => import('@/views/dormitory/hotDormitory'),
@@ -146,12 +138,20 @@ export const constantRoutes = [
   {
     path: '/people',
     component: Layout,
+    redirect: '/index',
+    meta: { title: '人员管理', icon: 'people', affix: true, roles: ['admin', 'editor'] },
     children: [
       {
         path: 'index',
         component: () => import('@/views/people/index'),
-        name: 'comments',
-        meta: { title: '人员管理', icon: 'people', affix: true }
+        name: 'index',
+        meta: { title: '前台账户', affix: true }
+      },
+      {
+        path: 'admin',
+        component: () => import('@/views/people/admin'),
+        name: 'admin',
+        meta: { title: '后台账户', affix: true }
       }
     ]
   },

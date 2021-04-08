@@ -2,6 +2,7 @@
   <div class="order-container">
     <el-card class="box-card">
       <el-table
+        v-loading="loading"
         :data="search?filterTableData:tableData"
         style="width: 100%"
         :border="true"
@@ -20,7 +21,7 @@
         />
         <el-table-column
           label="用户"
-          prop="userId"
+          prop="name"
         />
         <el-table-column
           label="入房时间"
@@ -45,6 +46,7 @@
         <el-table-column
           align="right"
         >
+          /* eslint-disable */
           <template slot="header">
             <el-input
               v-model="search"
@@ -52,6 +54,7 @@
               placeholder="输入关键字搜索"
             />
           </template>
+          /* eslint-enable */
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -81,7 +84,7 @@
             <el-input v-model="formInline.orderId" />
           </el-form-item>
           <el-form-item label="用户id">
-            <el-input v-model="formInline.userId" />
+            <el-input v-model="formInline.userId" disabled />
           </el-form-item>
           <el-form-item label="订单总价">
             <el-input v-model="formInline.totalPay" />
@@ -123,7 +126,7 @@
 </template>
 
 <script>
-import { getList, updateList, deletOrder } from '@/api/order/index';
+import { getList, updateList, deletOrder, getUser } from '@/api/order/index';
 import Edit from '@/components/Edit/index';
 export default {
   name: 'Index',
@@ -134,6 +137,7 @@ export default {
     return {
       tableData: [],
       filterTableData: [],
+      loading: true,
       search: '',
       dialogIsShow: false,
       title: '订单编辑',
@@ -144,14 +148,17 @@ export default {
   },
   watch: {
     search(newVal, oldVal) {
-      const demo = this.tableData.filter(data => {
-        for (const key in data) {
-          if (data[key] && data[key].toString().includes(newVal)) {
-            return true;
+      if (newVal) {
+        const demo = this.tableData.filter(data => {
+          for (const key in data) {
+            if (data[key] && data[key].toString().includes(newVal)) {
+              return true;
+            }
           }
-        }
-      });
-      this.filterTableData = demo;
+        });
+        this.filterTableData = demo;
+        console.info('测试', demo, newVal);
+      }
     }
   },
   created() {
@@ -206,16 +213,23 @@ export default {
     fetchData() {
       getList().then(response => {
         const { data } = response;
-        data.forEach((v, i) => {
-          const newObj = v;
-          for (const key in newObj) {
-            if (!newObj[key]) {
-              newObj[key] = '';
-            }
-          }
-        });
-        this.tableData = data;
+        this.initData(data);
       });
+    },
+
+    async initData(data) {
+      try {
+        // 循环遍历 等待
+        for (const item of data) {
+          await getUser({ id: item.userId }).then(res => {
+            item.name = res.data.name;
+          });
+        }
+        this.tableData = data;
+        this.loading = false;
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 };

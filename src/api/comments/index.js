@@ -2,7 +2,7 @@ import request from '@/utils/request';
 
 export function getList(data) {
   return request({
-    url: '/order/getList',
+    url: '/comment/getList',
     method: 'post',
     data
   });
@@ -10,16 +10,24 @@ export function getList(data) {
 
 export function updateList(data) {
   return request({
-    url: '/order/update',
+    url: '/hotel/update',
     method: 'post',
     data
   });
 }
 
-export function deletOrder(data) {
+export function deletList(data) {
   return request({
-    url: '/order/delete',
+    url: '/comment/delete',
     method: 'put',
+    data
+  });
+}
+
+export function addList(data) {
+  return request({
+    url: '/comment/add',
+    method: 'post',
     data
   });
 }
@@ -31,4 +39,3 @@ export function getUser(data) {
     data
   });
 }
-
