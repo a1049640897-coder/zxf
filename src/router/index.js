@@ -158,7 +158,7 @@ export const constantRoutes = [
   {
     path: '/documentation',
     component: Layout,
-    hidden: false,
+    hidden: true,
     children: [
       {
         path: 'index',
@@ -171,6 +171,7 @@ export const constantRoutes = [
   {
     path: '/guide',
     component: Layout,
+    hidden: true,
     redirect: '/guide/index',
     children: [
       {
@@ -208,6 +209,7 @@ export const asyncRoutes = [
     redirect: '/permission/page',
     alwaysShow: true, // will always show the root menu
     name: 'Permission',
+    hidden: true,
     meta: {
       title: 'Permission',
       icon: 'lock',
@@ -247,6 +249,7 @@ export const asyncRoutes = [
   {
     path: '/icon',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'index',
@@ -267,6 +270,7 @@ export const asyncRoutes = [
     path: '/example',
     component: Layout,
     redirect: '/example/list',
+    hidden: true,
     name: 'Example',
     meta: {
       title: 'Example',
@@ -298,6 +302,7 @@ export const asyncRoutes = [
   {
     path: '/tab',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'index',
@@ -313,6 +318,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'ErrorPages',
+    hidden: true,
     meta: {
       title: 'Error Pages',
       icon: '404'
@@ -336,6 +342,7 @@ export const asyncRoutes = [
   {
     path: '/error-log',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'log',
@@ -350,6 +357,7 @@ export const asyncRoutes = [
     path: '/excel',
     component: Layout,
     redirect: '/excel/export-excel',
+    hidden: true,
     name: 'Excel',
     meta: {
       title: 'Excel',
@@ -388,6 +396,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/zip/download',
     alwaysShow: true,
+    hidden: true,
     name: 'Zip',
     meta: { title: 'Zip', icon: 'zip' },
     children: [
@@ -403,6 +412,7 @@ export const asyncRoutes = [
   {
     path: '/pdf',
     component: Layout,
+    hidden: true,
     redirect: '/pdf/index',
     children: [
       {
@@ -422,6 +432,7 @@ export const asyncRoutes = [
   {
     path: '/theme',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'index',
@@ -434,6 +445,7 @@ export const asyncRoutes = [
 
   {
     path: '/clipboard',
+    hidden: true,
     component: Layout,
     children: [
       {
@@ -447,6 +459,7 @@ export const asyncRoutes = [
 
   {
     path: 'external-link',
+    hidden: true,
     component: Layout,
     children: [
       {

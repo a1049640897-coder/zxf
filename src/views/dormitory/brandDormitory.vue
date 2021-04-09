@@ -14,7 +14,6 @@
           <el-table-column
             label="id"
             prop="id"
-            width="100"
           />
           <el-table-column
             label="标题"
@@ -23,30 +22,31 @@
           />
           <el-table-column
             label="标题头像"
-            width="400"
           >
             <template slot-scope="scope">
               <el-image
-                fit="fill"
                 :src="scope.row.titleImg"
                 :preview-src-list="scope.row.titleImgList"
+                lazy
+                fit="contain"
+                style="width: 200px;height: 100px"
               />
             </template>
           </el-table-column>
           <el-table-column
             label="内容"
             prop="content"
-            width="200"
           />
           <el-table-column
             label="内容图片"
-            width="400"
           >
             <template slot-scope="scope">
               <el-image
-                fit="fill"
                 :src="scope.row.contentImg"
-                :preview-src-list="scope.row.contentImgLis"
+                :preview-src-list="scope.row.contentImgList"
+                lazy
+                fit="contain"
+                style="width: 200px;height: 100px"
               />
             </template>
           </el-table-column>

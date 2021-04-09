@@ -16,7 +16,7 @@ export function updateList(data) {
   });
 }
 
-export function deletOrder(data) {
+export function deletList(data) {
   return request({
     url: '/user/delete',
     method: 'put',

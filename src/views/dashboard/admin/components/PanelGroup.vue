@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+      <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-people">
           <svg-icon icon-class="peoples" class-name="card-panel-icon" />
         </div>
@@ -14,7 +14,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
+      <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-money">
           <svg-icon icon-class="money" class-name="card-panel-icon" />
         </div>
@@ -27,7 +27,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
+      <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-shopping">
           <svg-icon icon-class="shopping" class-name="card-panel-icon" />
         </div>
@@ -44,36 +44,31 @@
 
 <script>
 import CountTo from 'vue-count-to';
-import { getList as getUserList } from '@/api/users/index';
-import { getList as getOrderList } from '@/api/order/index';
-
 export default {
   components: {
     CountTo
   },
+  props: {
+    users: {
+      type: Number,
+      default: 0
+    },
+    sales: {
+      type: Number,
+      default: 0
+    },
+    orderCount: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
-      users: 0,
-      sales: 200,
-      orderCount: 0
     };
   },
   created() {
-    this.fetchData();
   },
   methods: {
-
-    async fetchData() {
-      await getUserList().then(res => {
-        const { data } = res;
-        this.users = data.length;
-      });
-      await getOrderList().then(res => {
-        const { data } = res;
-        this.orderCount = data.length;
-      });
-    },
-
     handleSetLineChartData(type) {
       this.$emit('handleSetLineChartData', type);
     }
@@ -84,7 +79,8 @@ export default {
 <style lang="scss" scoped>
 .panel-group {
   margin-top: 18px;
-
+  display: flex;
+  justify-content: center;
   .card-panel-col {
     margin-bottom: 32px;
   }

@@ -14,18 +14,18 @@
             width="100"
           />
           <el-table-column
-            label="酒店"
-            prop="hotelId"
-            width="300"
-          />
-          <el-table-column
-            label="评论人"
+            label="姓名"
             prop="name"
             width="300"
           />
           <el-table-column
-            label="评论内容"
-            prop="content"
+            label="电话"
+            prop="phone"
+            width="300"
+          />
+          <el-table-column
+            label="用户名"
+            prop="userName"
             width="200"
           />
           <el-table-column
@@ -34,6 +34,10 @@
           />
           <el-table-column label="操作">
             <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)"
+              >编辑</el-button>
               <el-button
                 size="mini"
                 type="danger"
@@ -56,15 +60,19 @@
         />
       </div>
     </el-card>
+    <Edit :dialog-visible="dialogIsShow" :title="title" @closeEdit="closeEdit" @updateList="updateList">
+      ddsa
+    </Edit>
   </div>
 </template>
 
 <script>
-import { getList, deletList, getUser } from '@/api/comments/index';
+import { getList, deletList, updateList } from '@/api/users/index';
+import Edit from '@/components/Edit/index';
 export default {
   name: 'Index',
   components: {
-
+    Edit
   },
   data() {
     return {
@@ -73,7 +81,7 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       tableData: [],
-      addTitle: '网红民宿增加',
+      title: '用户编辑',
       param: {
         type: 3,
         pageNo: 1,
@@ -81,7 +89,6 @@ export default {
       },
       pageCount: 1,
       loading: true,
-      title: '网红民宿编辑',
       dialogIsShow: false,
       addIsShow: false,
       addForm: {
@@ -102,24 +109,28 @@ export default {
   },
   methods: {
 
-    async  fetchData() {
-      this.loading = true;
-      await getList(this.param).then(res => {
-        const { pageCount, data } = res;
-        this.pageCount = pageCount;
-        this.dealData(data);
+    closeEdit() {
+      this.dialogIsShow = false;
+    },
+
+    updateList() {
+      updateList(this.formInline).then(res => {
+        console.info('res', res);
+        const { code } = res;
+        if (code === 200) {
+          this.dialogIsShow = false;
+        }
       });
     },
 
-    async dealData(data) {
+    async  fetchData() {
+      this.loading = true;
       try {
-        for (const item of data) {
-          await getUser({ id: item.userId }).then(res => {
-            item.name = res.data.name;
-          });
-        }
-        this.tableData = data;
-        this.loading = false;
+        await getList(this.param).then(res => {
+          const { data } = res;
+          this.tableData = data;
+          this.loading = false;
+        });
       } catch (e) {
         console.error(e);
       }
@@ -129,26 +140,24 @@ export default {
       this.param.pageNo = e;
     },
 
+    handleEdit(index, row) {
+      console.info('编辑', row);
+      this.dialogIsShow = true;
+    },
+
     handleDelete(index, row) {
       this.$confirm('你确定要删' + row.id + '嘛?')
         .then(_ => {
           deletList({ id: row.id }).then(res => {
-            this.dialogIsShow = false;
-            this.fetchData();
             this.$message({
               message: '删除成功啦!',
               type: 'success'
             });
+            this.fetchData();
           });
         })
         .catch(_ => {
-
         });
-    },
-
-    closeEdit() {
-      this.dialogIsShow = false;
-      this.addIsShow = false;
     }
   }
 };
